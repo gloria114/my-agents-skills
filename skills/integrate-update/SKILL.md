@@ -40,7 +40,7 @@ description: 把一个工作台更新(整包 .zip / 文件夹 / 单个或多个�
 
 覆盖后脚本会打印一段「### 2.5) 完整性」报告。**你必须读它并按需修复**:
 
-- **保留项 [.gitignore]**: 脚本已用 `--keep` 处理——zip 没带就**自动从 HEAD 恢复**。看到"已从 HEAD 自动恢复 ✓"即可,无需你动手。
+- **保留项 [.gitignore + calendar 参考数据]**: 脚本已用 `--keep` 处理——zip 没带就**自动从 HEAD 恢复**(`.gitignore`、`02_data/calendar/trading_calendar.parquet`、`forced_exit_time_rules.parquet`)。看到"已从 HEAD 自动恢复 ✓"即可,无需你动手。
 - **版本盖章 [harness_sha in ledger.py]**(溯源"哪个版本→哪个效果"的关键):
   - 报告"存在 ✓" → 无事。
   - 报告"缺失 ⚠️" → 这个 zip 基于盖章**之前**的代码。你需要在 worktree 里**重新盖**:
@@ -56,9 +56,9 @@ description: 把一个工作台更新(整包 .zip / 文件夹 / 单个或多个�
 ## 给用户的 diff 分类摘要(减负)
 
 汇报 diff 时**不要**把原始 N 行改动甩给用户,而是**分组各一句**:
-- 🔧 **基础设施(已自动)**: `.gitignore` 已恢复 / SHA 盖章已重盖(或标红)。
+- 🔧 **基础设施(已自动)**: `.gitignore` + calendar 已恢复 / SHA 盖章已重盖(或标红)。
 - ✨ **新增模块**: 如 `11_discovery/`、`04_skills/fast_engine_house_rules/`。
-- 🗑️ **删除(请确认)**: 如 `proposal*.yaml`、`calendar/*.parquet`——**标红**,让用户确认是不是真该删。
+- 🗑️ **删除(请确认)**: 如 `proposal*.yaml`、`critique_v1.yaml`——**标红**,让用户确认是不是真该删。(注:`calendar/*.parquet` 已被 `--keep` 自动恢复,不会出现在删除项里。)
 - 🧠 **harness 逻辑改动(重点看)**: 如 `state_machine.py +358`、`run.py +141`。
 
 结尾给一句**优先级**: "你只需重点看 X"。让用户从审 N 行 → 审 1 句摘要 + 1 个重点文件。
@@ -91,7 +91,7 @@ description: 把一个工作台更新(整包 .zip / 文件夹 / 单个或多个�
 bash integrate_update.sh --input <zip|文件夹|文件> [选项]
   [--repo <path>]          默认 ~/workspace/hermes-env/hermes_quant
   [--protect <a,b,c>]      默认 02_data/weighted,03_features/data   (永不覆盖/删除)
-  [--keep <a,b,c>]         默认 .gitignore   (覆盖后若缺失, 从 HEAD 恢复)
+  [--keep <a,b,c>]         默认 .gitignore + 02_data/calendar 两个 parquet   (覆盖后若缺失, 从 HEAD 恢复)
   [--branch <name>]        默认 integrate/<输入名>-<时间戳>
   [--worktree-path <path>] 默认 仓库同级 <repo>-integrate-<时间戳>
   [--no-delete]            覆盖时不删旧文件

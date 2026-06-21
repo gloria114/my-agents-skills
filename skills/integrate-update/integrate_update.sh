@@ -3,7 +3,7 @@
 # 把一个工作台更新(.zip / 文件夹 / 单文件) 以隔离 worktree 集成进 git 仓库。
 # 默认目标仓库: ~/workspace/hermes-env/hermes_quant  (可用 --repo 覆盖)
 # 默认受保护路径(永不覆盖/删除): 02_data/weighted, 03_features/data
-# 默认保留项(覆盖后若缺失,自动从 HEAD 恢复): .gitignore
+# 默认保留项(覆盖后若缺失,自动从 HEAD 恢复): .gitignore + 02_data/calendar 的两个 parquet
 #
 # 模式:
 #   默认(diff) : 建 worktree -> 覆盖更新 -> 完整性检查 -> 出 diff -> 停下
@@ -20,7 +20,7 @@ set -euo pipefail
 
 DEFAULT_REPO="$HOME/workspace/hermes-env/hermes_quant"
 DEFAULT_PROTECT="02_data/weighted,03_features/data"
-DEFAULT_KEEP=".gitignore"
+DEFAULT_KEEP=".gitignore,02_data/calendar/trading_calendar.parquet,02_data/calendar/forced_exit_time_rules.parquet"
 
 MODE="diff"
 REPO=""
