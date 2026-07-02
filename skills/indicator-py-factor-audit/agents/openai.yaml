@@ -1,0 +1,4 @@
+interface:
+  display_name: "Indicator PY 因子审计"
+  short_description: "审计 locked indicator_py 公式和因子值。"
+  default_prompt: "使用 $indicator-py-factor-audit 核实 indicator_py 因子数据是否符合 locked 59 列公式合同。"
