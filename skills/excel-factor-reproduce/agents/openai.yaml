@@ -1,0 +1,4 @@
+interface:
+  display_name: "Excel 因子复现"
+  short_description: "从完整 warmup 行情安全复现 locked 66 个 Excel 因子。"
+  default_prompt: "使用 $excel-factor-reproduce 从完整 warmup+live 序列或经 CH 确认的 cold-start 序列安全复现 Excel 66 因子到外部 staging。"

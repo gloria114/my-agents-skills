@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "status": "VALIDATED_CANDIDATE_WITH_DOCUMENTED_LEGACY_BOUNDARIES",
+  "created_at_utc": "2026-07-10T17:56:36.301359+00:00",
+  "implementation": {
+    "path": "D:\\qdh-feature-reproduce\\factor_indicator.py",
+    "sha256": "817b6531f19e33c5dea3307afca56314a8396f01034b03f53205e87ac49dc2d1",
+    "runtime_contract_reads": false,
+    "column_count": 59,
+    "input_columns": {
+      "base": ["high", "low", "close", "volume", "open_interest"],
+      "wh6": [
+        "wh6_MACD_MACD",
+        "wh6_RSI_RSI2",
+        "wh6_ATR_ATR",
+        "wh6_Z_SCORE_Z_SCORE",
+        "wh6_u_8b96f436_BBW"
+      ]
+    },
+    "output_dtype": "float64",
+    "infinity_policy": "normalize +/-Inf to NaN",
+    "boolean_policy": "float64 0.0/1.0; missing comparisons are false",
+    "warmup_policy": "compute one continuous sequence including transient warmup; caller slices warmup before persistence"
+  },
+  "locked_audit_sources": {
+    "contract": {
+      "path": "indicator-py-factor-audit/references/indicator-py-locked-59-contract.json",
+      "sha256": "633bf61bf71e7ef8d75cea3e65621a69177ce20bd3d856f72ed9ea777d3e9097"
+    },
+    "audit_script": {
+      "path": "indicator-py-factor-audit/scripts/indicator_py_audit.py",
+      "sha256": "bdc368f2859640ab93fd156741ff63ef87c033900714317af9fb4e72cda891a4"
+    }
+  },
+  "legacy_oracle": {
+    "market_root": "D:\\qdh-market-runs\\market-ch-20260710-144008\\backup\\market",
+    "features_root": "D:\\qdh-market-runs\\market-ch-20260710-144008\\quarantine\\features",
+    "paired_partitions": 3550,
+    "paired_rows": 13825291,
+    "symbols": 62,
+    "sequences": 557,
+    "trade_time_path_row_mismatches": 0,
+    "missing_sequence": "IM/240m",
+    "coverage": {
+      "min": "2020-01-02T09:00:00+08:00",
+      "max": "2026-04-30T15:10:00+08:00"
+    },
+    "schema": {
+      "files_checked": 3550,
+      "locked_order_failures": 0,
+      "dtype_failures": 0,
+      "dependency_failures": 0,
+      "indicator_columns": 59,
+      "indicator_dtype": "nullable double",
+      "zero_based_column_span": [199, 257],
+      "all_null_columns": []
+    }
+  },
+  "wh6_dependency_lock": {
+    "current_column_order_positions_zero_based": {
+      "wh6_ATR_ATR": 6,
+      "wh6_MACD_MACD": 40,
+      "wh6_RSI_RSI2": 60,
+      "wh6_Z_SCORE_Z_SCORE": 179,
+      "wh6_u_8b96f436_BBW": 184
+    },
+    "core_files": {
+      "wh6_candidate.py": "849c460a50864e05744211abe3e269b2e7e957312ee92ed2c432fbef4f89514e",
+      "wh6_formulas_v2.py": "e71c1d3be8c43c0c5e1ec0ac9fc204b471d07e527292b37571c08bc489439d8a",
+      "wh6_primitives.py": "9313b87f57138b9775ad502f8970d91bd81439e02f8056242561d2a822e39061"
+    },
+    "core_semantic_sha256": "c66a451ef6195e99d64e677723c846d74f6ff4663ef3e582bdcda46c47816be6",
+    "old_market_checks": {
+      "IM/5m": "all five dependencies bitwise equal for all 43824 cold-start rows",
+      "rb/5m": "MACD, RSI and ATR bitwise equal after 2000 rows; legacy Z_SCORE and BBW carry old rolling-std numerical differences"
+    }
+  },
+  "differential_acceptance": {
+    "comparison": {
+      "atol": 0.001,
+      "rtol": 1e-9,
+      "warmup_skip": 500,
+      "wh6_inputs": "legacy paired WH6 dependency columns, isolating Indicator-PY formula semantics"
+    },
+    "representative_sequences": {
+      "rb": {
+        "timeframes": ["5m", "10m", "15m", "20m", "30m", "60m", "120m", "240m", "1day"],
+        "sequences_passed": 9,
+        "failed_columns": 0
+      },
+      "IM": {
+        "timeframes": ["5m", "10m", "15m", "20m", "30m", "60m", "120m", "1day"],
+        "sequences_passed": 8,
+        "failed_columns": 0
+      }
+    },
+    "cold_start_full_comparison": {
+      "sequence": "IM/5m",
+      "rows": 43824,
+      "warmup_skip": 0,
+      "columns_passed": 59,
+      "columns_failed": 0
+    },
+    "repaired_audit_edge_vectors": [
+      {
+        "sequence": "rb/5m",
+        "column": "indicator_py_rsi_zscore_20",
+        "legacy_audit_bad_rows": 26,
+        "first_index": 20702,
+        "resolution": "near-zero population std becomes a zero denominator; final result remains NaN"
+      },
+      {
+        "sequence": "rb/5m",
+        "column": "indicator_py_vol_ratio_5_20",
+        "legacy_audit_bad_rows": 5,
+        "first_index": 52582,
+        "resolution": "exactly constant return windows force rolling std to exact zero; 0/0 remains NaN"
+      },
+      {
+        "sequence": "rb/5m",
+        "column": "indicator_py_zscore_volume_20",
+        "legacy_audit_bad_rows": 5,
+        "first_index": 52582,
+        "resolution": "constant-volume z-score is undefined NaN, never synthetic zero"
+      }
+    ]
+  },
+  "semantic_edge_contract": {
+    "rolling_std": "ddof=1 for return volatility; ddof=0 for z-scores; exact constant windows reset to zero",
+    "zscore_zero_std": "abs(std)<1e-10 is a zero denominator; ordinary division then Inf normalization yields NaN",
+    "rank": "60-row ascending percentage rank with average ties",
+    "rank_tie_evidence": "rb/5m close tie at old index 500 produced average rank 2.5/60; volume tie at index 549 produced 22.5/60",
+    "true_range": "row-wise maximum skips unavailable previous-close terms, so a cold start uses high-low",
+    "ppo": "adjust=False recursive EMA with min_periods equal to span; first valid row is 25",
+    "rsi_derived": "preserve the historical one-extra-row cold-start mask for RSI diff and RSI z-score",
+    "atr_dependency": "prefer locked WH6 ATR and fill only its unavailable cold-start prefix from equivalent market TR rolling mean",
+    "boolean": "all six condition/break outputs are float64 0/1 with no nulls; comparisons against unavailable history are false",
+    "division_by_zero": "ordinary IEEE behavior followed by final +/-Inf to NaN normalization"
+  },
+  "selftest": {
+    "status": "PASS",
+    "rows": 400,
+    "checks": [
+      "repeat_bitwise",
+      "float64_no_inf",
+      "constant_std_zero_then_0_over_0_nan",
+      "ppo_cold_start_mask",
+      "true_range_cold_start",
+      "boolean_float64",
+      "rank_average_ties"
+    ]
+  },
+  "remaining_boundaries": [
+    "The legacy oracle has no IM/240m sequence.",
+    "The legacy oracle ends on 2026-04-30 and does not cover later market rows.",
+    "Pre-2020 legacy market warmup is absent; exact legacy first-row state for pre-existing contracts cannot be reconstructed from the preserved pair alone.",
+    "End-to-end comparison against legacy Z_SCORE/BBW must not override the already accepted current WH6 core; Indicator-PY validation injects the paired legacy dependencies to isolate its own formulas."
+  ]
+}

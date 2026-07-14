@@ -1,0 +1,4 @@
+interface:
+  display_name: "TV Factor Reproduce"
+  short_description: "Reproduce the locked 142 TV factors safely"
+  default_prompt: "Use $tv-factor-reproduce to self-test or reproduce the locked 142 TV factors into an explicit external staging path."

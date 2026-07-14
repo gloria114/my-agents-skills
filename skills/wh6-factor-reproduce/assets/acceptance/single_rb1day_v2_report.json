@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "tool": "qdh_wh6_migration_differential_acceptance",
+  "metadata": {
+    "created_at": "2026-07-10T11:03:21.924642+00:00",
+    "tool_sha256": "699fea821e40d47a4250e5b5e4d106469a8ae22198d2f218744485c8ae016237",
+    "python": "3.13.12",
+    "numpy": "2.5.0",
+    "pandas": "3.0.3",
+    "pyarrow": "24.0.0",
+    "requests": "2.32.5",
+    "qdh_root": "D:\\qdh",
+    "formula_map": "D:\\qdh\\meta\\wh6_formula_map.json",
+    "formula_map_sha256": "d88c186c50dde492898468edd38ee07d6063a8f01be770f488e28f7d8a5f7689",
+    "legacy": {
+      "name": "legacy",
+      "source": "D:\\qdh\\scripts\\wh6_formula_engine.py",
+      "source_sha256": "5dc7b8df8a91ffc5241f75143eef313ae8fbfd9f7adcf44f6d4b2394984e822d"
+    },
+    "candidate": {
+      "name": "candidate",
+      "source": "D:\\qdh-wh6-migration-validation-20260710\\wh6_candidate.py",
+      "source_sha256": "849c460a50864e05744211abe3e269b2e7e957312ee92ed2c432fbef4f89514e",
+      "spec": "wh6_candidate:load_engine",
+      "root": "D:\\qdh-wh6-migration-validation-20260710",
+      "bundle_sha256s": {
+        "wh6_candidate.py": "849c460a50864e05744211abe3e269b2e7e957312ee92ed2c432fbef4f89514e",
+        "wh6_formulas_v2.py": "e71c1d3be8c43c0c5e1ec0ac9fc204b471d07e527292b37571c08bc489439d8a",
+        "wh6_primitives.py": "9313b87f57138b9775ad502f8970d91bd81439e02f8056242561d2a822e39061"
+      },
+      "bundle_semantic_sha256": "c66a451ef6195e99d64e677723c846d74f6ff4663ef3e582bdcda46c47816be6"
+    },
+    "capabilities": {
+      "legacy": {
+        "status": "READY",
+        "formula_groups": 97,
+        "output_columns": 198,
+        "unresolved": [],
+        "field_contract": {
+          "OPEN/O": "open",
+          "HIGH/H": "high",
+          "LOW/L": "low",
+          "CLOSE/C/SETTLE": "close",
+          "VOL/CJLVOL": "volume",
+          "CCL": "open_interest"
+        }
+      },
+      "candidate": {
+        "status": "READY",
+        "implementation": "pure_python_explicit_formulas",
+        "runtime_formula_file_reads": false,
+        "formula_groups": 97,
+        "output_columns": 198,
+        "source_formula_map_sha256": "d88c186c50dde492898468edd38ee07d6063a8f01be770f488e28f7d8a5f7689",
+        "field_contract": {
+          "OPEN/O": "open",
+          "HIGH/H": "high",
+          "LOW/L": "low",
+          "CLOSE/C/SETTLE": "close",
+          "VOL/CJLVOL": "volume",
+          "CCL": "open_interest"
+        }
+      }
+    }
+  },
+  "result": {
+    "mode": "single",
+    "status": "PASS",
+    "full_scope": false,
+    "discovered_market_partitions": 7,
+    "selected_sequences": 1,
+    "selected_partitions": 7,
+    "sequence_scope_sha256": "9bcf6b901e5f99043fb66140d6aa775ea4a9ae6b2114c887ec961772c708036f",
+    "sequences": [
+      {
+        "sequence": "RB/1day",
+        "contract_code": "rbJQ",
+        "warmup_rows": 974,
+        "live_rows": 1567,
+        "partitions": 7
+      }
+    ],
+    "pairs": {
+      "legacy_vs_candidate": {
+        "status": "PASS",
+        "strict_bitwise": true,
+        "atol": 1e-12,
+        "rtol": 1e-12,
+        "frames": 1,
+        "rows": 2541,
+        "cells": 503118,
+        "null_mask_mismatches": 0,
+        "bitwise_mismatches": 0,
+        "numeric_mismatches": 0,
+        "signed_zero_mismatches": 0,
+        "max_abs_diff": 0.0,
+        "max_rel_diff": 0.0,
+        "differing_column_count": 0,
+        "by_column": {},
+        "structural_failures": [],
+        "examples": []
+      },
+      "candidate_vs_live": {
+        "status": "PASS",
+        "strict_bitwise": true,
+        "atol": 1e-12,
+        "rtol": 1e-12,
+        "frames": 7,
+        "rows": 1567,
+        "cells": 310266,
+        "null_mask_mismatches": 0,
+        "bitwise_mismatches": 0,
+        "numeric_mismatches": 0,
+        "signed_zero_mismatches": 0,
+        "max_abs_diff": 0.0,
+        "max_rel_diff": 0.0,
+        "differing_column_count": 0,
+        "by_column": {},
+        "structural_failures": [],
+        "examples": []
+      },
+      "legacy_vs_live": {
+        "status": "PASS",
+        "strict_bitwise": true,
+        "atol": 1e-12,
+        "rtol": 1e-12,
+        "frames": 7,
+        "rows": 1567,
+        "cells": 310266,
+        "null_mask_mismatches": 0,
+        "bitwise_mismatches": 0,
+        "numeric_mismatches": 0,
+        "signed_zero_mismatches": 0,
+        "max_abs_diff": 0.0,
+        "max_rel_diff": 0.0,
+        "differing_column_count": 0,
+        "by_column": {},
+        "structural_failures": [],
+        "examples": []
+      }
+    }
+  }
+}

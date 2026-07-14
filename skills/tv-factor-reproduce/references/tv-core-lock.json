@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "contract": "tv_locked_142",
+  "status": "LOCKED",
+  "core_file": "scripts/factor_tv.py",
+  "core_sha256": "7e0e77b7735165459c1b94db46393cb5f9c206cdf7391530b3af4c5f5e2b390d",
+  "contract_file": "references/tv-locked-142-contract.json",
+  "contract_sha256": "b89b95a4a2eaa7110fe2b1813767d0b73f051ddc21982a67701ace03eb79192c",
+  "selftest_file": "scripts/tv_selftest.py",
+  "selftest_sha256": "78c9d35677d8cd2e71ee6371826c9ae7fc8ae090987e08296c8efd398ab39c2a",
+  "column_count": 142,
+  "column_order_sha256": "d19bfc5fe9380f1d2cf6767e15634d2fa33fd259754c30bc1da2f71f5e2f7538",
+  "feature_dtype": "float64",
+  "inf_policy": "convert to null",
+  "signed_zero_policy": "canonical positive zero",
+  "required_runtime": {
+    "python": "3.10.20",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1"
+  },
+  "runtime_external_source_dependency": false
+}

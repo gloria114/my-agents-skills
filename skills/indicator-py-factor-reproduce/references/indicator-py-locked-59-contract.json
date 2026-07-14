@@ -1,0 +1,318 @@
+{
+  "contract_name": "indicator_py_locked_59",
+  "version": "2026-07-02",
+  "status": "locked_verified",
+  "column_prefix": "indicator_py_",
+  "column_count": 59,
+  "required_base_columns": [
+    "high",
+    "low",
+    "close",
+    "volume",
+    "open_interest"
+  ],
+  "required_wh6_columns": [
+    "wh6_MACD_MACD",
+    "wh6_RSI_RSI2",
+    "wh6_ATR_ATR",
+    "wh6_Z_SCORE_Z_SCORE",
+    "wh6_u_8b96f436_BBW"
+  ],
+  "columns": [
+    {
+      "name": "indicator_py_ret_1",
+      "formula": "close.pct_change(1)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ret_3",
+      "formula": "close.pct_change(3)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ret_5",
+      "formula": "close.pct_change(5)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ret_10",
+      "formula": "close.pct_change(10)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ret_20",
+      "formula": "close.pct_change(20)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_momentum_5",
+      "formula": "close - close.shift(5)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_momentum_10",
+      "formula": "close - close.shift(10)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_momentum_20",
+      "formula": "close - close.shift(20)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma5_slope",
+      "formula": "close.rolling(5).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma5",
+      "formula": "(close - close.rolling(5).mean()) / close.rolling(5).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma10_slope",
+      "formula": "close.rolling(10).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma10",
+      "formula": "(close - close.rolling(10).mean()) / close.rolling(10).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma20_slope",
+      "formula": "close.rolling(20).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma20",
+      "formula": "(close - close.rolling(20).mean()) / close.rolling(20).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma40_slope",
+      "formula": "close.rolling(40).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma40",
+      "formula": "(close - close.rolling(40).mean()) / close.rolling(40).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma60_slope",
+      "formula": "close.rolling(60).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma60",
+      "formula": "(close - close.rolling(60).mean()) / close.rolling(60).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma120_slope",
+      "formula": "close.rolling(120).mean().pct_change()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_close_to_ma120",
+      "formula": "(close - close.rolling(120).mean()) / close.rolling(120).mean()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma5_ma10_gap",
+      "formula": "(ma5 - ma10) / ma10",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma5_ma20_gap",
+      "formula": "(ma5 - ma20) / ma20",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma10_ma20_gap",
+      "formula": "(ma10 - ma20) / ma20",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma20_ma40_gap",
+      "formula": "(ma20 - ma40) / ma40",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma20_ma60_gap",
+      "formula": "(ma20 - ma60) / ma60",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_ma40_ma120_gap",
+      "formula": "(ma40 - ma120) / ma120",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_macd_hist_diff",
+      "formula": "(wh6_MACD_MACD / 2).diff()",
+      "dependencies": ["wh6_MACD_MACD"]
+    },
+    {
+      "name": "indicator_py_ppo",
+      "formula": "(ema(close,12) - ema(close,26)) / ema(close,26)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_rsi_diff",
+      "formula": "wh6_RSI_RSI2.diff()",
+      "dependencies": ["wh6_RSI_RSI2"]
+    },
+    {
+      "name": "indicator_py_rsi_zscore_20",
+      "formula": "(wh6_RSI_RSI2 - wh6_RSI_RSI2.rolling(20).mean()) / wh6_RSI_RSI2.rolling(20).std(ddof=0)",
+      "dependencies": ["wh6_RSI_RSI2"]
+    },
+    {
+      "name": "indicator_py_hl_pct",
+      "formula": "(high - low) / close",
+      "dependencies": ["high", "low", "close"]
+    },
+    {
+      "name": "indicator_py_tr_ratio",
+      "formula": "max(high-low, abs(high-close.shift(1)), abs(low-close.shift(1))) / close",
+      "dependencies": ["high", "low", "close"]
+    },
+    {
+      "name": "indicator_py_atr_norm",
+      "formula": "wh6_ATR_ATR / close",
+      "dependencies": ["wh6_ATR_ATR", "close"]
+    },
+    {
+      "name": "indicator_py_volatility_5",
+      "formula": "close.pct_change().rolling(5).std()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_volatility_10",
+      "formula": "close.pct_change().rolling(10).std()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_volatility_20",
+      "formula": "close.pct_change().rolling(20).std()",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_vol_ratio_5_20",
+      "formula": "volatility_5 / volatility_20",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_break_high_20",
+      "formula": "close > high.rolling(20).max().shift(1)",
+      "dependencies": ["close", "high"]
+    },
+    {
+      "name": "indicator_py_break_low_20",
+      "formula": "close < low.rolling(20).min().shift(1)",
+      "dependencies": ["close", "low"]
+    },
+    {
+      "name": "indicator_py_dist_prev_high_20",
+      "formula": "(close - high.rolling(20).max().shift(1)) / high.rolling(20).max().shift(1)",
+      "dependencies": ["close", "high"]
+    },
+    {
+      "name": "indicator_py_dist_prev_low_20",
+      "formula": "(close - low.rolling(20).min().shift(1)) / low.rolling(20).min().shift(1)",
+      "dependencies": ["close", "low"]
+    },
+    {
+      "name": "indicator_py_pos_in_range_20",
+      "formula": "(close - low.rolling(20).min()) / (high.rolling(20).max() - low.rolling(20).min())",
+      "dependencies": ["close", "high", "low"]
+    },
+    {
+      "name": "indicator_py_pos_in_range_60",
+      "formula": "(close - low.rolling(60).min()) / (high.rolling(60).max() - low.rolling(60).min())",
+      "dependencies": ["close", "high", "low"]
+    },
+    {
+      "name": "indicator_py_close_pos",
+      "formula": "(close - low) / (high - low)",
+      "dependencies": ["close", "high", "low"]
+    },
+    {
+      "name": "indicator_py_boll_pct_b",
+      "formula": "0.5 + wh6_Z_SCORE_Z_SCORE / 4",
+      "dependencies": ["wh6_Z_SCORE_Z_SCORE"]
+    },
+    {
+      "name": "indicator_py_boll_width",
+      "formula": "wh6_u_8b96f436_BBW",
+      "dependencies": ["wh6_u_8b96f436_BBW"]
+    },
+    {
+      "name": "indicator_py_zscore_close_20",
+      "formula": "wh6_Z_SCORE_Z_SCORE",
+      "dependencies": ["wh6_Z_SCORE_Z_SCORE"]
+    },
+    {
+      "name": "indicator_py_zscore_volume_20",
+      "formula": "(volume - volume.rolling(20).mean()) / volume.rolling(20).std(ddof=0)",
+      "dependencies": ["volume"]
+    },
+    {
+      "name": "indicator_py_close_rank_60",
+      "formula": "close.rolling(60).rank(pct=True)",
+      "dependencies": ["close"]
+    },
+    {
+      "name": "indicator_py_volume_rank_60",
+      "formula": "volume.rolling(60).rank(pct=True)",
+      "dependencies": ["volume"]
+    },
+    {
+      "name": "indicator_py_vol_ratio_5",
+      "formula": "volume / volume.rolling(5).mean()",
+      "dependencies": ["volume"]
+    },
+    {
+      "name": "indicator_py_vol_ratio_20",
+      "formula": "volume / volume.rolling(20).mean()",
+      "dependencies": ["volume"]
+    },
+    {
+      "name": "indicator_py_volume_diff",
+      "formula": "volume.diff()",
+      "dependencies": ["volume"]
+    },
+    {
+      "name": "indicator_py_oi_diff",
+      "formula": "open_interest.diff()",
+      "dependencies": ["open_interest"]
+    },
+    {
+      "name": "indicator_py_oi_ratio_5",
+      "formula": "open_interest / open_interest.rolling(5).mean()",
+      "dependencies": ["open_interest"]
+    },
+    {
+      "name": "indicator_py_price_up_vol_up",
+      "formula": "(close > close.shift(1)) & (volume > volume.shift(1))",
+      "dependencies": ["close", "volume"]
+    },
+    {
+      "name": "indicator_py_price_down_vol_up",
+      "formula": "(close < close.shift(1)) & (volume > volume.shift(1))",
+      "dependencies": ["close", "volume"]
+    },
+    {
+      "name": "indicator_py_price_up_oi_up",
+      "formula": "(close > close.shift(1)) & (open_interest > open_interest.shift(1))",
+      "dependencies": ["close", "open_interest"]
+    },
+    {
+      "name": "indicator_py_price_down_oi_up",
+      "formula": "(close < close.shift(1)) & (open_interest > open_interest.shift(1))",
+      "dependencies": ["close", "open_interest"]
+    }
+  ]
+}

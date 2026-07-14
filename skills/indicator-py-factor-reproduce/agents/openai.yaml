@@ -1,0 +1,4 @@
+interface:
+  display_name: "Indicator PY 因子复现"
+  short_description: "从连续行情安全复现锁定的 59 个 Indicator PY 因子"
+  default_prompt: "Use $indicator-py-factor-reproduce to self-test or stage the locked 59 Indicator PY factors for the unified qdh features orchestrator."

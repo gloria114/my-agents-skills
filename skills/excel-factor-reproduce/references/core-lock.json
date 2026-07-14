@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "LOCKED",
+  "contract_name": "excel_locked_66",
+  "contract_version": "2026-07-02",
+  "artifacts": {
+    "core": {
+      "path": "scripts/factor_excel.py",
+      "sha256": "6792fd6d0c394a214012edc4a758b76342e30e91658752312c3cab1475e414e3",
+      "bytes": 16805,
+      "core_version": "excel-locked-66-production-v1"
+    },
+    "contract": {
+      "path": "references/excel-locked-66-contract.json",
+      "sha256": "b88be9f680c17fa3e7375c8df9ead1b7e95953a7127f2813f10b1cca00dd58e2"
+    },
+    "formulas": {
+      "path": "references/excel-formulas.md",
+      "sha256": "b55a3c3a1c1dc0d12ee5adab460273ad50562c9104266d60f72e0684721773f1"
+    },
+    "audit_policy": {
+      "path": "references/excel-audit-policy.md",
+      "sha256": "c10d357260ec50f0b6d4e70e78c215acba9a3736b97a57f658c5353015f26f89"
+    },
+    "migration_acceptance": {
+      "path": "references/excel-migration-acceptance.json",
+      "sha256": "2c1ef23e41fc90d90319c794cd0b3be018f5fad40feb5ae849528f1ef54a5169"
+    }
+  },
+  "columns": {
+    "count": 66,
+    "order_sha256": "0ecc7828fe015b5b1a705ff169fa65f407e6d443090eda1c3182bf955b820210"
+  },
+  "semantics": {
+    "history": "all available pre-2020 warmup rows followed by the complete live sequence; explicit cold start is legal only when CH preflight confirms zero warmup rows",
+    "ema": "pandas ewm(span=N, adjust=False)",
+    "recursive_sma": "first valid seed, then (x + (N-1)*previous)/N",
+    "zero_denominator": "NaN",
+    "output": "trade_time plus 66 float64 columns; NaN serialized as Arrow null",
+    "warmup_output": "slice all rows before live_start"
+  },
+  "runtime_dependency_policy": {
+    "self_contained": true,
+    "required_runtime": {
+      "python": "3.10.20",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.1"
+    },
+    "forbidden_runtime_dependencies": [
+      "excel-factor-audit",
+      "wh6-factor-audit",
+      "wh6-factor-reproduce",
+      "source workbook",
+      ".XTRD files"
+    ],
+    "skill_bundle": "read_only",
+    "multi_agent_output": "one unique non-existing output path per agent",
+    "unified_writer_boundary": "This skill writes only a new external single-sequence staging Parquet. Only the orchestrator assembles or publishes qdh wide features."
+  }
+}

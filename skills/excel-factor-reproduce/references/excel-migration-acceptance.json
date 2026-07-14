@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "status": "PASS_MIGRATION_CORE_READY",
+  "created_at_utc": "2026-07-10T17:56:30.8422063+00:00",
+  "artifact": {
+    "path": "factor_excel.py",
+    "sha256": "6792fd6d0c394a214012edc4a758b76342e30e91658752312c3cab1475e414e3",
+    "core_version": "excel-locked-66-production-v1",
+    "runtime_formula_file_reads": false
+  },
+  "locked_source": {
+    "contract_name": "excel_locked_66",
+    "contract_version": "2026-07-02",
+    "contract_sha256": "b88be9f680c17fa3e7375c8df9ead1b7e95953a7127f2813f10b1cca00dd58e2",
+    "audit_script_sha256": "3abd4b153a2bc2c8f902f72cae131b9996e3cd11d5b35fb092dedf53f7a93156",
+    "columns": 66,
+    "columns_sha256": "0ecc7828fe015b5b1a705ff169fa65f407e6d443090eda1c3182bf955b820210",
+    "column_order_exact": true
+  },
+  "production_semantics": {
+    "history": "all available ClickHouse rows before 2020 followed by the complete live market sequence",
+    "ema": "pandas ewm(span=N, adjust=False), plain full-history seed",
+    "masked_or_auto_alternative": false,
+    "recursive_sma": "first valid value seed, then (x + (N-1)*previous)/N",
+    "amount": "close * volume",
+    "output_dtype": "float64",
+    "zero_denominator": "NaN",
+    "positive_or_negative_infinity": "NaN",
+    "warmup_output": "caller must slice; no pre-2020 rows may be written"
+  },
+  "selftest": {
+    "status": "PASS",
+    "synthetic_rows": 800,
+    "columns": 66,
+    "deterministic_bitwise": true,
+    "infinite_values": 0,
+    "zero_denominator_to_nan": true,
+    "contract_order_check": "PASS",
+    "fail_closed_empty_input": "PASS",
+    "legacy_plain_formula_null_mask_mismatches": 0,
+    "legacy_plain_formula_max_abs_diff": 1.4210854715202004e-14
+  },
+  "old_oracle": {
+    "features_root": "D:\\qdh-market-runs\\market-ch-20260710-144008\\quarantine\\features",
+    "paired_market_root": "D:\\qdh-market-runs\\market-ch-20260710-144008\\backup\\market",
+    "files": 3550,
+    "rows": 13825291,
+    "bytes": 46551772798,
+    "schema_columns": 466,
+    "excel_columns": 66,
+    "excel_order_exact": true,
+    "all_feature_dtypes": "float64",
+    "scope_limitations": {
+      "current_target_files": 3555,
+      "current_target_rows": 14680651,
+      "missing_current_rows": 855360,
+      "missing_paths": [
+        "IM/240m/2022/data.parquet",
+        "IM/240m/2023/data.parquet",
+        "IM/240m/2024/data.parquet",
+        "IM/240m/2025/data.parquet",
+        "IM/240m/2026/data.parquet"
+      ]
+    }
+  },
+  "old_oracle_pilots": [
+    {
+      "sequence": "rb/5m",
+      "rows": 103236,
+      "compare_start": 2000,
+      "rows_compared": 101236,
+      "audit_tolerance": {"absolute": 1e-6, "relative": 1e-9},
+      "tolerance_bad_cells": 0,
+      "null_mask_mismatches": 0,
+      "float64_bit_mismatches": 582824,
+      "non_bitwise_columns": 7,
+      "max_abs_diff_finite": 1.000444171950221e-11
+    },
+    {
+      "sequence": "IM/5m",
+      "rows": 43824,
+      "compare_start": 2000,
+      "rows_compared": 41824,
+      "audit_tolerance": {"absolute": 1e-6, "relative": 1e-9},
+      "tolerance_bad_cells": 0,
+      "null_mask_mismatches": 0,
+      "float64_bit_mismatches": 215755,
+      "non_bitwise_columns": 9,
+      "max_abs_diff_finite": 2.000888343900442e-11
+    },
+    {
+      "sequence": "SA/1day",
+      "rows": 1532,
+      "compare_start": 1432,
+      "rows_compared": 100,
+      "audit_tolerance": {"absolute": 1e-6, "relative": 1e-9},
+      "tolerance_bad_cells": 0,
+      "null_mask_mismatches": 0,
+      "float64_bit_mismatches": 648,
+      "non_bitwise_columns": 8,
+      "max_abs_diff_finite": 6.914177674843813e-9
+    }
+  ],
+  "known_non_bitwise_reasons": [
+    "The old oracle does not expose its hidden pre-2020 warmup rows or exact original recursive seed state.",
+    "The old oracle was produced by a prior numeric runtime and operation ordering; sub-1e-8 rounding differences are expected even where the locked formula is equivalent.",
+    "The old oracle covers an older market grid and is missing five current IM/240m partitions and 855360 current rows.",
+    "The historical audit accepted plain-warmup or masked-full per column; the production core intentionally fixes one plain full-history interpretation.",
+    "Therefore old-oracle tolerance PASS is migration evidence, not bitwise ground truth for the rebuilt current market."
+  ],
+  "release_gate": {
+    "old_oracle_is_full_ground_truth": false,
+    "core_is_ready_for_integrated_staging": true,
+    "full_release_requires": [
+      "read-only ClickHouse pre-2020 warmup snapshot before and after computation",
+      "independent recomputation of all 66 columns over every complete symbol/timeframe sequence",
+      "exact null-mask and float64-bit comparison between independent computation and staging",
+      "3555 partition and 14680651 row path/key parity with current qdh market",
+      "zero pre-2020 output rows and zero infinite output values"
+    ]
+  }
+}

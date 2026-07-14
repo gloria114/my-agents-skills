@@ -1,0 +1,4 @@
+interface:
+  display_name: "QDH Features 全量复现"
+  short_description: "组合四套锁定公式，安全重建、验收并发布 466 列 features"
+  default_prompt: "Use $qdh-features-reproduce to preflight and safely rebuild the complete 466-column qdh features from current market data."
