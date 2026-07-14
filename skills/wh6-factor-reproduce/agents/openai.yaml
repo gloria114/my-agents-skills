@@ -1,0 +1,4 @@
+interface:
+  display_name: "WH6 因子复现"
+  short_description: "用锁定纯 Python 公式安全复现并验收 198 个 WH6 因子"
+  default_prompt: "Use $wh6-factor-reproduce to preflight, stage, and validate the locked 198 WH6 factors for the unified qdh features orchestrator."
